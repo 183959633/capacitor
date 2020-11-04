@@ -96,10 +96,10 @@ internal class CapacitorBridge: NSObject, CAPBridgeProtocol {
     // Wheter to inject the Cordova files
     private var injectCordovaFiles = false
     private var cordovaParser: CDVConfigParser?
-    
+
     // Background dispatch queue for plugin calls
     var dispatchQueue = DispatchQueue(label: "bridge")
-    
+
     // MARK: - CAPBridgeProtocol: Deprecated
 
     public func getWebView() -> WKWebView? {
@@ -137,9 +137,9 @@ internal class CapacitorBridge: NSObject, CAPBridgeProtocol {
     @nonobjc public func setStatusBarAnimation(_ animation: UIStatusBarAnimation) {
         statusBarAnimation = animation
     }
-    
+
     // MARK: - Static Methods
-    
+
     /**
      * Print a hopefully informative error message to the log when something
      * particularly dreadful happens.
@@ -161,9 +161,8 @@ internal class CapacitorBridge: NSObject, CAPBridgeProtocol {
         CAPLog.print("⚡️ ❌  Please verify your installation or file an issue")
     }
 
-    
     // MARK: - Initialization
-    
+
     init(with configuration: InstanceConfiguration, delegate bridgeDelegate: CAPBridgeDelegate, cordovaConfiguration: CDVConfigParser, messageHandler messageHandlerWrapper: CAPMessageHandlerWrapper) {
         self.bridgeDelegate = bridgeDelegate
         self.messageHandlerWrapper = messageHandlerWrapper
@@ -171,9 +170,9 @@ internal class CapacitorBridge: NSObject, CAPBridgeProtocol {
         self.cordovaParser = cordovaConfiguration
 
         super.init()
-        
+
         self.messageHandlerWrapper.bridge = self
-        
+
         exportCoreJS(localUrl: configuration.localURL.absoluteString)
         registerPlugins()
         setupCordovaCompatibility()
@@ -294,9 +293,9 @@ internal class CapacitorBridge: NSObject, CAPBridgeProtocol {
     func savePluginCall(_ call: CAPPluginCall) {
         storedCalls[call.callbackId] = call
     }
-    
+
     // MARK: - CAPBridgeProtocol: Call Management
-    
+
     @objc public func getSavedCall(_ callbackId: String) -> CAPPluginCall? {
         return storedCalls[callbackId]
     }
@@ -430,7 +429,7 @@ internal class CapacitorBridge: NSObject, CAPBridgeProtocol {
     func toJs(result: JSResult, save: Bool) {
         let resultJson = result.toJson()
         CAPLog.print("⚡️  TO JS", resultJson.prefix(256))
-        
+
         DispatchQueue.main.async {
             self.getWebView()?.evaluateJavaScript("""
              window.Capacitor.fromNative({
@@ -461,9 +460,9 @@ internal class CapacitorBridge: NSObject, CAPBridgeProtocol {
             }
         }
     }
-    
+
     // MARK: - CAPBridgeProtocol: JavaScript Handling
-    
+
     /**
      * Eval JS for a specific plugin.
      */
@@ -530,21 +529,21 @@ internal class CapacitorBridge: NSObject, CAPBridgeProtocol {
             }
         }
     }
-    
+
     // MARK: - CAPBridgeProtocol: Logging
-    
+
     public func print(message: String, for plugin: CAPPlugin) {
         CAPLog.print("⚡️ ", plugin.pluginId, "-", message)
     }
-    
+
     // MARK: - CAPBridgeProtocol: View Presentation
-    
+
     @objc public func showAlertWith(title: String, message: String, buttonTitle: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: buttonTitle, style: UIAlertAction.Style.default, handler: nil))
         self.viewController?.present(alert, animated: true, completion: nil)
     }
-    
+
     @objc public func presentVC(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
         if viewControllerToPresent.modalPresentationStyle == .popover {
             self.viewController?.present(viewControllerToPresent, animated: flag, completion: completion)

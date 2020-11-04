@@ -27,17 +27,17 @@ extension Notification.Name {
  */
 @objc public enum CAPNotifications: Int {
     // swiftlint:disable identifier_name
-    @available(*, deprecated, renamed: "Notification.Name.capacitorOpenURL")
+    @available(*, deprecated, message: "renamed to 'Notification.Name.capacitorOpenURL'")
     case URLOpen
-    @available(*, deprecated, renamed: "Notification.Name.capacitorOpenUniversalLink")
+    @available(*, deprecated, message: "renamed to 'Notification.Name.capacitorOpenUniversalLink'")
     case UniversalLinkOpen
-    @available(*, deprecated, renamed: "Notification.Name.capacitorContinueActivity")
+    @available(*, deprecated, message: "Notification.Name.capacitorContinueActivity'")
     case ContinueActivity
-    @available(*, deprecated, renamed: "Notification.Name.capacitorDidRegisterForRemoteNotifications")
+    @available(*, deprecated, message: "renamed to 'Notification.Name.capacitorDidRegisterForRemoteNotifications'")
     case DidRegisterForRemoteNotificationsWithDeviceToken
-    @available(*, deprecated, renamed: "Notification.Name.capacitorDidFailToRegisterForRemoteNotifications")
+    @available(*, deprecated, message: "renamed to 'Notification.Name.capacitorDidFailToRegisterForRemoteNotifications'")
     case DidFailToRegisterForRemoteNotificationsWithError
-    @available(*, deprecated, renamed: "Notification.Name.capacitorDecidePolicyForNavigationAction")
+    @available(*, deprecated, message: "renamed to 'Notification.Name.capacitorDecidePolicyForNavigationAction'")
     case DecidePolicyForNavigationAction
     // swiftlint:enable identifier_name
 
